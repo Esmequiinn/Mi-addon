@@ -1,14 +1,13 @@
 const { addonBuilder, getRouter } = require('stremio-addon-sdk');
 
 const manifest = {
-    id: 'com.latino.eng.mix',
+    id: 'com.latino.vidfast.pro',
     version: '1.0.0',
-    name: 'Multi Latino & English',
-    description: 'Vidsrc & Embed.su Latino',
+    name: 'Vidfast Pro Latino',
+    description: 'Solo contenido en Español Latino desde Vidfast.pro',
     resources: ['stream'],
     types: ['movie', 'series'],
-    idPrefixes: ['tt'],
-    catalogs: []
+    idPrefixes: ['tt']
 };
 
 const builder = new addonBuilder(manifest);
@@ -21,22 +20,14 @@ builder.defineStreamHandler(async ({ type, id }) => {
 
     const streams = [];
 
-    // Latino
+    // Vidfast.pro - Configurado para intentar forzar el idioma Latino
+    // Nota: Usamos externalUrl porque Vidfast requiere interacción para el reproductor
     streams.push({
-        name: 'Embed.su',
-        title: 'ESPAÑOL LATINO / MULTI 🇲🇽',
-        externalUrl: type === 'movie'
-            ? `https://embed.su/embed/movie/${imdbId}`
-            : `https://embed.su/embed/tv/${imdbId}/${s}/${e}`
-    });
-
-    // Inglés
-    streams.push({
-        name: 'Vidsrc.to',
-        title: 'ENGLISH / MULTI 🇺🇸 (New)',
-        externalUrl: type === 'movie'
-            ? `https://vidsrc.to/embed/movie/${imdbId}`
-            : `https://vidsrc.to/embed/tv/${imdbId}/${s}/${e}`
+        name: 'Vidfast Latino',
+        title: 'REPRODUCIR EN LATINO 🇲🇽',
+        externalUrl: type === 'movie' 
+            ? `https://vidfast.pro/embed/movie/${imdbId}` 
+            : `https://vidfast.pro/embed/tv/${imdbId}/${s}/${e}`
     });
 
     return { streams };
