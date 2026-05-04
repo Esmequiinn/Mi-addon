@@ -7,7 +7,8 @@ const manifest = {
     description: 'Vidsrc & Embed.su Latino',
     resources: ['stream'],
     types: ['movie', 'series'],
-    idPrefixes: ['tt']
+    idPrefixes: ['tt'],
+    catalogs: []
 };
 
 const builder = new addonBuilder(manifest);
@@ -17,20 +18,25 @@ builder.defineStreamHandler(async ({ type, id }) => {
     const imdbId = parts[0];
     const s = parts[1];
     const e = parts[2];
+
     const streams = [];
 
     // Latino
     streams.push({
-        name: "Embed.su",
-        title: "ESPAÑOL LATINO / MULTI 🇲🇽",
-        url: type === 'movie' ? `https://embed.su/embed/movie/${imdbId}` : `https://embed.su/embed/tv/${imdbId}/${s}/${e}`
+        name: 'Embed.su',
+        title: 'ESPAÑOL LATINO / MULTI 🇲🇽',
+        externalUrl: type === 'movie'
+            ? `https://embed.su/embed/movie/${imdbId}`
+            : `https://embed.su/embed/tv/${imdbId}/${s}/${e}`
     });
 
-    // Inglés New
+    // Inglés
     streams.push({
-        name: "Vidsrc.to",
-        title: "ENGLISH / MULTI 🇺🇸 (New)",
-        url: type === 'movie' ? `https://vidsrc.to/embed/movie/${imdbId}` : `https://vidsrc.to/embed/tv/${imdbId}/${s}/${e}`
+        name: 'Vidsrc.to',
+        title: 'ENGLISH / MULTI 🇺🇸 (New)',
+        externalUrl: type === 'movie'
+            ? `https://vidsrc.to/embed/movie/${imdbId}`
+            : `https://vidsrc.to/embed/tv/${imdbId}/${s}/${e}`
     });
 
     return { streams };
@@ -41,6 +47,7 @@ const router = getRouter(addonInterface);
 
 module.exports = (req, res) => {
     router(req, res, () => {
-        res.status(404).send('Not Found');
+        res.statusCode = 404;
+        res.end('Not Found');
     });
 };
