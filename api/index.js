@@ -26,8 +26,8 @@ builder.defineStreamHandler(async ({ type, id }) => {
         name: '🇺🇸 StreamIMDb',
         title: 'ENGLISH — StreamIMDb.ru',
         externalUrl: isMovie
-            ? `https://streamimdb.ru/movie/${imdbId}`
-            : `https://streamimdb.ru/tv/${imdbId}/${s}/${e}`
+            ? `https://streamimdb.ru/embed/movie/${imdbId}`
+            : `https://streamimdb.ru/embed/tv/${imdbId}/${s}/${e}`
     });
 
     return { streams };
