@@ -13,25 +13,24 @@ const manifest = {
 const builder = new addonBuilder(manifest);
 
 builder.defineStreamHandler(async ({ type, id }) => {
-    const [imdbId, s, e] = id.split(':');
+    const parts = id.split(':');
+    const imdbId = parts[0];
+    const s = parts[1];
+    const e = parts[2];
     const streams = [];
 
+    // Latino
     streams.push({
         name: "Embed.su",
         title: "ESPAÑOL LATINO / MULTI 🇲🇽",
         url: type === 'movie' ? `https://embed.su/embed/movie/${imdbId}` : `https://embed.su/embed/tv/${imdbId}/${s}/${e}`
     });
 
+    // Inglés New
     streams.push({
         name: "Vidsrc.to",
         title: "ENGLISH / MULTI 🇺🇸 (New)",
         url: type === 'movie' ? `https://vidsrc.to/embed/movie/${imdbId}` : `https://vidsrc.to/embed/tv/${imdbId}/${s}/${e}`
-    });
-
-    streams.push({
-        name: "Vidsrc.me",
-        title: "ENGLISH / MULTI 🌎 (Old)",
-        url: type === 'movie' ? `https://vidsrc.me/embed/movie?imdb=${imdbId}` : `https://vidsrc.me/embed/tv?imdb=${imdbId}&sea=${s}&episode=${e}`
     });
 
     return { streams };
@@ -41,11 +40,7 @@ const addonInterface = builder.getInterface();
 const router = getRouter(addonInterface);
 
 module.exports = (req, res) => {
-    router(req, res, (err) => {
-        if (err) {
-            res.status(500).send({ error: err.message });
-        } else {
-            res.status(404).send('Not Found');
-        }
+    router(req, res, () => {
+        res.status(404).send('Not Found');
     });
 };
