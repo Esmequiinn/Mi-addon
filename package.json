@@ -1,5 +1,5 @@
 {
-  "name": "stremio-addon-latino-eng",
+  "name": "stremio-latino-eng",
   "version": "1.0.0",
   "main": "api/index.js",
   "dependencies": {
