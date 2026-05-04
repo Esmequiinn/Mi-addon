@@ -3,8 +3,8 @@ const { addonBuilder, getRouter } = require('stremio-addon-sdk');
 const manifest = {
     id: 'com.streamimdb.english',
     version: '1.0.0',
-    name: 'StreamIMDb English',
-    description: 'English streams via StreamIMDb.ru',
+    name: 'StreamIMDb',
+    description: 'stream las peliculas o series qu quieras desde la pagina de StreamIMDb con solo un toque',
     resources: ['stream'],
     types: ['movie', 'series'],
     idPrefixes: ['tt'],
