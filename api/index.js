@@ -20,8 +20,7 @@ builder.defineStreamHandler(async ({ type, id }) => {
 
     const streams = [];
 
-    // Vidfast.pro - Configurado para intentar forzar el idioma Latino
-    // Nota: Usamos externalUrl porque Vidfast requiere interacción para el reproductor
+    // Vidfast.pro Latino
     streams.push({
         name: 'Vidfast Latino',
         title: 'REPRODUCIR EN LATINO 🇲🇽',
@@ -37,8 +36,11 @@ const addonInterface = builder.getInterface();
 const router = getRouter(addonInterface);
 
 module.exports = (req, res) => {
-    router(req, res, () => {
-        res.statusCode = 404;
-        res.end('Not Found');
+    router(req, res, (err) => {
+        if (err) {
+            res.status(500).send({ error: err.message });
+        } else {
+            res.status(404).send('Not Found');
+        }
     });
 };
