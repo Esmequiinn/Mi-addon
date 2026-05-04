@@ -1,5 +1,4 @@
 const { addonBuilder, getRouter } = require('stremio-addon-sdk');
-const express = require('express');
 
 const manifest = {
     id: 'com.latino.eng.mix',
@@ -52,7 +51,11 @@ builder.defineStreamHandler(async ({ type, id }) => {
     return { streams };
 });
 
-const app = express();
-app.use(getRouter(builder.getInterface()));
+const addonInterface = builder.getInterface();
+const router = getRouter(addonInterface);
 
-module.exports = app;
+module.exports = (req, res) => {
+    router(req, res, () => {
+        res.status(404).send('Not found');
+    });
+};
