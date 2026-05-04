@@ -1,10 +1,10 @@
 const { addonBuilder, getRouter } = require('stremio-addon-sdk');
 
 const manifest = {
-    id: 'com.latino.multi.sources',
-    version: '1.1.0',
-    name: 'Latino Multi Fuentes',
-    description: 'Vidsrc.me y 2embed — Multi idioma',
+    id: 'com.streamimdb.english',
+    version: '1.0.0',
+    name: 'StreamIMDb English',
+    description: 'English streams via StreamIMDb.ru',
     resources: ['stream'],
     types: ['movie', 'series'],
     idPrefixes: ['tt'],
@@ -22,22 +22,12 @@ builder.defineStreamHandler(async ({ type, id }) => {
     const isMovie = type === 'movie';
     const streams = [];
 
-    // Vidsrc.me
     streams.push({
-        name: '🌎 Vidsrc.me',
-        title: 'Multi — Vidsrc.me',
+        name: '🇺🇸 StreamIMDb',
+        title: 'ENGLISH — StreamIMDb.ru',
         externalUrl: isMovie
-            ? `https://vidsrc.me/embed/movie?imdb=${imdbId}`
-            : `https://vidsrc.me/embed/tv?imdb=${imdbId}&season=${s}&episode=${e}`
-    });
-
-    // 2embed.cc
-    streams.push({
-        name: '🌎 2embed',
-        title: 'Multi — 2embed.cc',
-        externalUrl: isMovie
-            ? `https://www.2embed.cc/embed/${imdbId}`
-            : `https://www.2embed.cc/embedtv/${imdbId}&s=${s}&e=${e}`
+            ? `https://streamimdb.ru/movie/${imdbId}`
+            : `https://streamimdb.ru/tv/${imdbId}/${s}/${e}`
     });
 
     return { streams };
